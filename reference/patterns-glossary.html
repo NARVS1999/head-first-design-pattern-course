@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Design Patterns Quick Reference — Tokyo Edition</title>
+  <link rel="stylesheet" href="../assets/style.css">
+  <script>if (localStorage.getItem("theme") === "dark") document.documentElement.setAttribute("data-theme", "dark");</script>
+  <style>
+    .ref-container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 2rem 1.5rem;
+    }
+    .ref-header {
+      text-align: center;
+      margin-bottom: 2rem;
+      padding-bottom: 1.5rem;
+      border-bottom: 3px double var(--rule);
+    }
+    .ref-header h1 {
+      font-size: 2rem;
+      margin-bottom: 0.25rem;
+    }
+    .ref-header .accent {
+      color: var(--accent);
+    }
+    .ref-header .dateline {
+      font-size: 0.8rem;
+      color: var(--muted);
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+    }
+    .ref-section {
+      margin-bottom: 2rem;
+    }
+    .ref-section h2 {
+      font-size: 1.1rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      border-bottom: 2px solid var(--rule);
+      padding-bottom: 0.4rem;
+      margin-bottom: 1rem;
+    }
+    .ref-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 1rem;
+    }
+    .ref-card {
+      border: 1px solid var(--rule);
+      padding: 1rem;
+      background: var(--card-bg);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    .ref-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    }
+    .ref-card h3 {
+      font-size: 0.95rem;
+      margin-bottom: 0.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+    .ref-card h3 .icon-inline {
+      width: 16px;
+      height: 16px;
+      color: var(--accent);
+    }
+    .ref-card p {
+      font-size: 0.85rem;
+      line-height: 1.5;
+      margin: 0;
+    }
+    .ref-card .type-badge {
+      display: inline-block;
+      font-size: 0.65rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      padding: 0.15rem 0.4rem;
+      border: 1px solid var(--accent);
+      color: var(--accent);
+      margin-bottom: 0.5rem;
+    }
+    .principle-list {
+      list-style: none;
+      padding: 0;
+    }
+    .principle-list li {
+      padding: 0.75rem;
+      border-bottom: 1px solid var(--rule);
+      font-size: 0.9rem;
+    }
+    .principle-list li:last-child {
+      border-bottom: none;
+    }
+    .principle-list strong {
+      color: var(--accent);
+    }
+    .back-link {
+      display: inline-block;
+      margin-top: 2rem;
+      font-size: 0.85rem;
+      color: var(--accent);
+      text-decoration: none;
+    }
+    .back-link:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+<button class="theme-toggle" id="themeToggle" title="Toggle theme">
+  <svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+</button>
+
+<div class="ref-container">
+  <div class="ref-header">
+    <div class="dateline">Tokyo Edition &mdash; Quick Reference</div>
+    <h1>DESIGN <span class="accent">PATTERNS</span></h1>
+    <p style="color:var(--muted);font-size:0.85rem;">Buod ng lahat ng patterns at principles sa kurso</p>
+  </div>
+
+  <!-- Creational Patterns -->
+  <div class="ref-section">
+    <h2>Creational Patterns</h2>
+    <div class="ref-grid">
+      <div class="ref-card">
+        <span class="type-badge">Creational</span>
+        <h3>
+          <svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg>
+          Singleton
+        </h3>
+        <p>Isang instance lang sa buong application. Private constructor + static getInstance().</p>
+        <a href="../lessons/0005-singleton-pattern.html" style="font-size:0.8rem;color:var(--accent);text-decoration:none;">Aralin &rarr;</a>
+      </div>
+      <div class="ref-card">
+        <span class="type-badge">Creational</span>
+        <h3>
+          <svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+          Factory Method
+        </h3>
+        <p>Subclasses ang nag-decide kung anong object ang gagawin. Base class nagde-define ng algorithm.</p>
+        <a href="../lessons/0004-factory-patterns.html" style="font-size:0.8rem;color:var(--accent);text-decoration:none;">Aralin &rarr;</a>
+      </div>
+      <div class="ref-card">
+        <span class="type-badge">Creational</span>
+        <h3>
+          <svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>
+          Abstract Factory
+        </h3>
+        <p>Interface para sa creating families of related objects nang hindi tinutukoy ang mga concrete class.</p>
+        <a href="../lessons/0004-factory-patterns.html" style="font-size:0.8rem;color:var(--accent);text-decoration:none;">Aralin &rarr;</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Structural Patterns -->
+  <div class="ref-section">
+    <h2>Structural Patterns</h2>
+    <div class="ref-grid">
+      <div class="ref-card">
+        <span class="type-badge">Structural</span>
+        <h3>
+          <svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+          Decorator
+        </h3>
+        <p>Nagdadagdag ng behavior sa objects nang hindi gumagamit ng inheritance. Bine-wrap ang objects.</p>
+        <a href="../lessons/0003-decorator-pattern.html" style="font-size:0.8rem;color:var(--accent);text-decoration:none;">Aralin &rarr;</a>
+      </div>
+      <div class="ref-card">
+        <span class="type-badge">Structural</span>
+        <h3>
+          <svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
+          Adapter
+        </h3>
+        <p>Nag-convert ng interface para maging compatible sa iba pang interface. Parang power plug converter.</p>
+        <a href="../lessons/0007-adapter-and-facade.html" style="font-size:0.8rem;color:var(--accent);text-decoration:none;">Aralin &rarr;</a>
+      </div>
+      <div class="ref-card">
+        <span class="type-badge">Structural</span>
+        <h3>
+          <svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+          Facade
+        </h3>
+        <p>Simpleng interface para sa komplikadong subsystem. Hindi binabawasan ang functionality.</p>
+        <a href="../lessons/0007-adapter-and-facade.html" style="font-size:0.8rem;color:var(--accent);text-decoration:none;">Aralin &rarr;</a>
+      </div>
+      <div class="ref-card">
+        <span class="type-badge">Structural</span>
+        <h3>
+          <svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          Proxy
+        </h3>
+        <p>Surrogate o placeholder para sa ibang object. May Remote, Virtual, at Protection proxy.</p>
+        <a href="../lessons/0011-proxy-pattern.html" style="font-size:0.8rem;color:var(--accent);text-decoration:none;">Aralin &rarr;</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Behavioral Patterns -->
+  <div class="ref-section">
+    <h2>Behavioral Patterns</h2>
+    <div class="ref-grid">
+      <div class="ref-card">
+        <span class="type-badge">Behavioral</span>
+        <h3>
+          <svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+          Observer
+        </h3>
+        <p>Automatic notification sa maraming observers kapag nagbago ang state ng subject. One-to-many.</p>
+        <a href="../lessons/0002-observer-pattern.html" style="font-size:0.8rem;color:var(--accent);text-decoration:none;">Aralin &rarr;</a>
+      </div>
+      <div class="ref-card">
+        <span class="type-badge">Behavioral</span>
+        <h3>
+          <svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="4 17 10 11 4 5"/><line x1="12" y1="19" x2="20" y2="19"/></svg>
+          Command
+        </h3>
+        <p>Nag-encapsulate ng request bilang object. Nag-decouple ng sender at receiver.</p>
+        <a href="../lessons/0006-command-pattern.html" style="font-size:0.8rem;color:var(--accent);text-decoration:none;">Aralin &rarr;</a>
+      </div>
+      <div class="ref-card">
+        <span class="type-badge">Behavioral</span>
+        <h3>
+          <svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>
+          Template Method
+        </h3>
+        <p>Skeleton ng algorithm sa isang method. Subclasses ang nag-override ng ilang steps.</p>
+        <a href="../lessons/0008-template-method.html" style="font-size:0.8rem;color:var(--accent);text-decoration:none;">Aralin &rarr;</a>
+      </div>
+      <div class="ref-card">
+        <span class="type-badge">Behavioral</span>
+        <h3>
+          <svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+          Iterator
+        </h3>
+        <p>Paraan para ma-access ang elements ng collection nang hindi ini-expose ang structure.</p>
+        <a href="../lessons/0009-iterator-and-composite.html" style="font-size:0.8rem;color:var(--accent);text-decoration:none;">Aralin &rarr;</a>
+      </div>
+      <div class="ref-card">
+        <span class="type-badge">Behavioral</span>
+        <h3>
+          <svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          Composite
+        </h3>
+        <p>Treat ng individual at group objects bilang iisang entity. Para sa tree structures.</p>
+        <a href="../lessons/0009-iterator-and-composite.html" style="font-size:0.8rem;color:var(--accent);text-decoration:none;">Aralin &rarr;</a>
+      </div>
+      <div class="ref-card">
+        <span class="type-badge">Behavioral</span>
+        <h3>
+          <svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          State
+        </h3>
+        <p>Behavior ng object nagbabago depende sa internal state. Iwas sa maraming if-else.</p>
+        <a href="../lessons/0010-state-pattern.html" style="font-size:0.8rem;color:var(--accent);text-decoration:none;">Aralin &rarr;</a>
+      </div>
+      <div class="ref-card">
+        <span class="type-badge">Compound</span>
+        <h3>
+          <svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg>
+          MVC (Compound)
+        </h3>
+        <p>Pinagsasama ang Model, View, at Controller. Hindi isang pattern lang kundi combination ng patterns.</p>
+        <a href="../lessons/0012-compound-patterns.html" style="font-size:0.8rem;color:var(--accent);text-decoration:none;">Aralin &rarr;</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Design Principles -->
+  <div class="ref-section">
+    <h2>Design Principles</h2>
+    <ul class="principle-list">
+      <li><strong>Encapsulate What Varies</strong> — Ihiwalay ang mga bahagi na madalas magbago mula sa mga stable na bahagi.</li>
+      <li><strong>Favor Composition Over Inheritance</strong> — Mas mainam na mag-compose ng objects kaysa umasa sa inheritance.</li>
+      <li><strong>Program to Interfaces, Not Implementations</strong> — Nakadepende sa abstract types, hindi sa concrete classes.</li>
+      <li><strong>Open/Closed Principle</strong> — Open for extension, closed for modification.</li>
+      <li><strong>Dependency Inversion Principle</strong> — High-level at low-level modules ay parehong nakadepende sa abstractions.</li>
+      <li><strong>Principle of Least Knowledge</strong> — Makipag-usap lang sa mga direktang kaibigan mong objects.</li>
+      <li><strong>Hollywood Principle</strong> — "Don't call us, we'll call you." High-level components ang tumawag.</li>
+      <li><strong>Single Responsibility Principle</strong> — Iisa lang ang dahilan para baguhin ang isang klase.</li>
+    </ul>
+  </div>
+
+  <a href="../index.html" class="back-link">&larr; Bumalik sa Home</a>
+</div>
+
+<script>
+  (function() {
+    var btn = document.getElementById('themeToggle');
+    if (btn) {
+      btn.addEventListener('click', function() {
+        var html = document.documentElement;
+        var isDark = html.getAttribute('data-theme') === 'dark';
+        if (isDark) {
+          html.removeAttribute('data-theme');
+          localStorage.setItem('theme', 'light');
+        } else {
+          html.setAttribute('data-theme', 'dark');
+          localStorage.setItem('theme', 'dark');
+        }
+      });
+    }
+  })();
+</script>
+<script src="../assets/icons.js"></script>
+</body>
+</html>

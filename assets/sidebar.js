@@ -7,8 +7,6 @@
   if (!sidebar) return;
 
   // Extract the current lesson ID from the filename.
-  // Convention: filename starts with the ID followed by a dash,
-  // e.g. "0001-lesson-name.html" → id "0001".
   var pathname = window.location.pathname;
   var filename = pathname.split('/').pop() || '';
   var currentId = filename.split('-')[0];
@@ -19,19 +17,33 @@
 
   var html =
     '<div class="sidebar-section">' +
-      '<div class="sidebar-header">Course</div>' +
-      '<nav class="sidebar-nav"><ul>';
+      '<div class="sidebar-header">Design Patterns Course</div>' +
+    '</div>';
+
+  var lastPhase = null;
 
   for (var i = 0; i < LESSONS.length; i++) {
     var l = LESSONS[i];
     if (l.id === currentId) currentIdx = i;
 
+    // Phase header
+    if (l.phase !== lastPhase) {
+      if (lastPhase !== null) {
+        html += '</ul></nav></div>';
+      }
+      lastPhase = l.phase;
+      html += '<div class="sidebar-section"><div class="sidebar-phase">Phase ' + l.phase + ' — ' + (l.phaseName || '') + '</div><nav class="sidebar-nav"><ul>';
+    }
+
     var cls = 'sidebar-link';
     if (l.id === currentId) cls += ' current';
+
+    var iconHtml = (window.ICONS && ICONS[l.icon]) ? '<span class="sidebar-icon">' + ICONS[l.icon] + '</span>' : '';
 
     html +=
       '<li><a href="' + baseDir + l.file + '" class="' + cls + '">' +
         '<span class="sidebar-num">' + l.id + '</span>' +
+        iconHtml +
         '<span class="sidebar-title">' + l.title + '</span>' +
       '</a></li>';
   }

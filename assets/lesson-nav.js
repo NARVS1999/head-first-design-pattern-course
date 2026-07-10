@@ -6,15 +6,11 @@
   var nav = document.querySelector('.lesson-nav');
   if (!nav) return;
 
-  // Extract the current lesson ID from the filename.
-  // Convention: filename starts with the ID followed by a dash,
-  // e.g. "0001-lesson-name.html" → id "0001".
   var pathname = window.location.pathname;
   var filename = pathname.split('/').pop() || '';
   var currentId = filename.split('-')[0];
   var currentIdx = -1;
 
-  // Derive the base directory so links work from any page depth
   var baseDir = pathname.substring(0, pathname.lastIndexOf('/') + 1);
 
   for (var i = 0; i < LESSONS.length; i++) {
@@ -23,17 +19,20 @@
 
   if (currentIdx < 0) return;
 
+  var arrowLeft = (window.ICONS && ICONS.arrowLeft) ? ICONS.arrowLeft : '<svg class="icon-inline nav-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>';
+  var arrowRight = (window.ICONS && ICONS.arrowRight) ? ICONS.arrowRight : '<svg class="icon-inline nav-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>';
+
   var html = '';
 
   if (currentIdx > 0) {
     var prev = LESSONS[currentIdx - 1];
-    html += '<a href="' + baseDir + prev.file + '" class="nav-link nav-prev">\u2190 Previous: ' + prev.title + '</a>';
+    html += '<a href="' + baseDir + prev.file + '" class="nav-link nav-prev">' + arrowLeft + ' Previous: ' + prev.title + '</a>';
   }
 
   if (currentIdx < LESSONS.length - 1) {
     var next = LESSONS[currentIdx + 1];
     var cls = currentIdx === 0 ? 'nav-link nav-next nav-link-only' : 'nav-link nav-next';
-    html += '<a href="' + baseDir + next.file + '" class="' + cls + '">Next: ' + next.title + ' \u2192</a>';
+    html += '<a href="' + baseDir + next.file + '" class="' + cls + '">Next: ' + next.title + ' ' + arrowRight + '</a>';
   }
 
   nav.innerHTML = html;

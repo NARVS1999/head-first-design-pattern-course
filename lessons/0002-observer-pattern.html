@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lesson 0002: Observer Pattern</title>
+  <link rel="stylesheet" href="../assets/style.css">
+  <script>if (localStorage.getItem("theme") === "dark") document.documentElement.setAttribute("data-theme", "dark");</script>
+</head>
+<body>
+<button class="theme-toggle" id="themeToggle" title="Toggle theme">
+  <svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+</button>
+<div class="lesson-layout">
+  <aside class="lesson-sidebar" id="lesson-sidebar"></aside>
+  <main class="lesson-main">
+    <div class="lesson-container">
+
+      <span class="lesson-phase-badge">Phase 1 &mdash; Pundasyon</span>
+      <div class="lesson-title-wrap">
+        <h1>The Observer Pattern</h1>
+      </div>
+      <p class="lesson-subtitle">Huwag Mong Miss ang Update! &mdash; Keeping your Objects in the Know</p>
+
+      <div class="info animate-on-scroll">
+        <strong>
+          <svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>
+          Lesson Goal
+        </strong>
+        Maunawaan ang one-to-many dependency sa pagitan ng objects at ma-implement ang sariling Observer pattern gamit ang interfaces.
+      </div>
+
+      <!-- ======== Section 1: Core Concepts ======== -->
+      <h2 class="animate-on-scroll">
+        <svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a5 5 0 0 1 5 5c0 .9-.2 1.7-.7 2.5A5 5 0 0 1 19 14a5 5 0 0 1-3.5 4.8A5 5 0 0 1 12 22a5 5 0 0 1-3.5-3.2A5 5 0 0 1 5 14a5 5 0 0 1 2.7-4.5A5 5 0 0 1 7 7a5 5 0 0 1 5-5z"/><path d="M12 2v20"/></svg>
+        Core Concepts
+      </h2>
+
+      <p class="animate-on-scroll">Ang <strong>Observer Pattern</strong> ay nagbibigay-daan sa isang object (ang <strong>Subject</strong>) na automatic na mag-notify sa maraming dependent objects (ang mga <strong>Observers</strong>) kapag nagbago ang state nito.</p>
+
+      <table class="animate-on-scroll">
+        <thead>
+          <tr><th>Role</th><th>Description</th><th>Example</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>Subject (Observable)</strong></td><td>Ang source ng data/events. Nag-iimbak ng list ng observers at nagno-notify sa kanila.</td><td>WeatherData</td></tr>
+          <tr><td><strong>Observer</strong></td><td>Mga nag-a-abang ng update mula sa Subject. Bawat isa ay may <code>update()</code> method.</td><td>PhoneDisplay, TabletDisplay</td></tr>
+        </tbody>
+      </table>
+
+      <div class="tip animate-on-scroll">
+        <strong>
+          <svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18h6"/><path d="M10 22h4"/><path d="M15.09 14c.18-.98.65-1.74 1.41-2.5A4.65 4.65 0 0 0 18 8 6 6 0 0 0 6 8c0 1 .23 2.23 1.5 3.5A4.61 4.61 0 0 1 8.91 14"/></svg>
+          Loose Coupling
+        </strong>
+        Alam lang ng Subject na may observers, pero <strong>hindi niya alam ang konkretong klase</strong> nila. Ito ang tawag na <em>loose coupling</em> — pwedeng mag-add/remove ng observers nang hindi na-aapektuhan ang Subject.
+      </div>
+
+      <!-- ======== Section 2: Design Principle ======== -->
+      <h2 class="animate-on-scroll">
+        <svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4"/></svg>
+        Design Principle
+      </h2>
+
+      <blockquote class="animate-on-scroll">
+        <p><strong>"Strive for loosely coupled designs between objects that interact."</strong></p>
+        <p style="margin-top:0.5rem;font-style:normal;font-size:0.9rem;">Sa Taglish: Gawing maluwag ang koneksyon ng mga nag-uusap na objects — para pwede mong baguhin ang isa nang hindi masyadong apektado ang isa.</p>
+      </blockquote>
+
+      <!-- ======== Section 3: Diagram ======== -->
+      <h2 class="animate-on-scroll">
+        <svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>
+        Observer Pattern Structure
+      </h2>
+
+      <div class="diagram-container animate-on-scroll">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/a/a8/Observer_w_update.svg" alt="Observer Pattern UML Diagram">
+      </div>
+      <p class="diagram-caption">Fig 1. Observer Pattern &mdash; Subject notifies multiple Observer implementations</p>
+
+      <!-- ======== Section 4: Code ======== -->
+      <h2 class="animate-on-scroll">
+        <svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+        Simpleng Code
+      </h2>
+
+      <pre class="animate-on-scroll"><code><span class="kw">interface</span> <span class="cl">Subject</span> {
+    <span class="kw">void</span> <span class="fn">registerObserver</span>(<span class="cl">Observer</span> o);
+    <span class="kw">void</span> <span class="fn">removeObserver</span>(<span class="cl">Observer</span> o);
+    <span class="kw">void</span> <span class="fn">notifyObservers</span>();
+}
+
+<span class="kw">interface</span> <span class="cl">Observer</span> {
+    <span class="kw">void</span> <span class="fn">update</span>(<span class="kw">float</span> temp, <span class="kw">float</span> humidity);
+}
+
+<span class="kw">class</span> <span class="cl">WeatherData</span> <span class="kw">implements</span> <span class="cl">Subject</span> {
+    <span class="kw">private</span> List&lt;<span class="cl">Observer</span>&gt; observers = <span class="kw">new</span> ArrayList&lt;&gt;();
+    <span class="kw">private</span> <span class="kw">float</span> temperature;
+    <span class="kw">private</span> <span class="kw">float</span> humidity;
+
+    <span class="kw">public void</span> <span class="fn">registerObserver</span>(<span class="cl">Observer</span> o) {
+        observers.<span class="fn">add</span>(o);
+    }
+
+    <span class="kw">public void</span> <span class="fn">notifyObservers</span>() {
+        <span class="kw">for</span> (<span class="cl">Observer</span> observer : observers) {
+            observer.<span class="fn">update</span>(temperature, humidity);
+        }
+    }
+
+    <span class="kw">public void</span> <span class="fn">setMeasurements</span>(<span class="kw">float</span> t, <span class="kw">float</span> h) {
+        <span class="kw">this</span>.temperature = t;
+        <span class="kw">this</span>.humidity = h;
+        <span class="fn">notifyObservers</span>();
+    }
+}</code></pre>
+
+      <!-- ======== Section 5: Interactive Sequence ======== -->
+      <div class="demo-box animate-on-scroll">
+        <h4>
+          <svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+          Interactive: Weather Station Simulator
+        </h4>
+        <p style="font-size:0.88rem;margin-bottom:1rem;">I-set ang temperature at humidity, pagkatapos i-click "Notify Observers" para makita kung paano nag-update ang mga display.</p>
+
+        <div style="display:flex;gap:1rem;flex-wrap:wrap;margin-bottom:1rem;">
+          <div>
+            <label style="font-family:var(--font-display);font-size:0.8rem;font-weight:600;display:block;margin-bottom:0.25rem;">Temperature (°C)</label>
+            <input type="range" id="tempSlider" min="20" max="45" value="30" style="width:150px;">
+            <span id="tempVal" style="font-family:var(--font-mono);font-size:0.85rem;">30</span>
+          </div>
+          <div>
+            <label style="font-family:var(--font-display);font-size:0.8rem;font-weight:600;display:block;margin-bottom:0.25rem;">Humidity (%)</label>
+            <input type="range" id="humidSlider" min="20" max="90" value="50" style="width:150px;">
+            <span id="humidVal" style="font-family:var(--font-mono);font-size:0.85rem;">50</span>
+          </div>
+        </div>
+
+        <div style="display:flex;gap:0.5rem;margin-bottom:1rem;">
+          <button class="demo-btn" onclick="weatherUpdate()">Notify Observers</button>
+        </div>
+
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:0.75rem;">
+          <div class="demo-result" id="phoneDisplay">
+            <div style="font-family:var(--font-display);font-size:0.7rem;font-weight:700;color:var(--accent);margin-bottom:0.25rem;">PHONE DISPLAY</div>
+            <div id="phoneContent">Waiting for update...</div>
+          </div>
+          <div class="demo-result" id="tabletDisplay">
+            <div style="font-family:var(--font-display);font-size:0.7rem;font-weight:700;color:var(--accent);margin-bottom:0.25rem;">TABLET DISPLAY</div>
+            <div id="tabletContent">Waiting for update...</div>
+          </div>
+          <div class="demo-result" id="desktopDisplay">
+            <div style="font-family:var(--font-display);font-size:0.7rem;font-weight:700;color:var(--accent);margin-bottom:0.25rem;">DESKTOP DISPLAY</div>
+            <div id="desktopContent">Waiting for update...</div>
+          </div>
+        </div>
+      </div>
+
+      <script>
+        document.getElementById('tempSlider').addEventListener('input', function() {
+          document.getElementById('tempVal').textContent = this.value;
+        });
+        document.getElementById('humidSlider').addEventListener('input', function() {
+          document.getElementById('humidVal').textContent = this.value;
+        });
+
+        function weatherUpdate() {
+          var temp = document.getElementById('tempSlider').value;
+          var humid = document.getElementById('humidSlider').value;
+          var msg = temp + '°C / ' + humid + '%';
+          document.getElementById('phoneContent').textContent = msg;
+          document.getElementById('tabletContent').textContent = msg;
+          document.getElementById('desktopContent').textContent = msg;
+
+          // Animate
+          ['phoneDisplay','tabletDisplay','desktopDisplay'].forEach(function(id, i) {
+            var el = document.getElementById(id);
+            el.style.transform = 'scale(1.03)';
+            el.style.borderColor = 'var(--accent)';
+            setTimeout(function() {
+              el.style.transform = 'scale(1)';
+              el.style.borderColor = 'var(--border)';
+            }, 300 + i * 100);
+          });
+        }
+      </script>
+
+      <!-- ======== Quiz ======== -->
+      <h2 class="animate-on-scroll">
+        <svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+        Quick Quiz
+      </h2>
+
+      <div class="quiz-item animate-on-scroll">
+        <div class="quiz-question">1. Sa Observer pattern, ang Subject ay may list ng mga:</div>
+        <div class="quiz-options">
+          <label class="quiz-option"><input type="radio" name="q1" value="a"> concrete classes</label>
+          <label class="quiz-option"><input type="radio" name="q1" value="b"> observers</label>
+          <label class="quiz-option"><input type="radio" name="q1" value="c"> strategies</label>
+        </div>
+        <div class="quiz-feedback" id="feedback1"></div>
+      </div>
+
+      <div class="quiz-item animate-on-scroll">
+        <div class="quiz-question">2. Ang loose coupling sa Observer pattern ay nangangahulugan na:</div>
+        <div class="quiz-options">
+          <label class="quiz-option"><input type="radio" name="q2" value="a"> Alam ng Subject ang lahat ng concrete observer classes</label>
+          <label class="quiz-option"><input type="radio" name="q2" value="b"> Hindi alam ng Subject ang konkretong klase ng observers</label>
+          <label class="quiz-option"><input type="radio" name="q2" value="c"> Dapat i-hardcode ang observers sa Subject</label>
+        </div>
+        <div class="quiz-feedback" id="feedback2"></div>
+      </div>
+
+      <div class="quiz-item animate-on-scroll">
+        <div class="quiz-question">3. Ang pangunahing method na tinatawag ng Subject sa bawat observer ay:</div>
+        <div class="quiz-options">
+          <label class="quiz-option"><input type="radio" name="q3" value="a"> execute()</label>
+          <label class="quiz-option"><input type="radio" name="q3" value="b"> notify()</label>
+          <label class="quiz-option"><input type="radio" name="q3" value="c"> update()</label>
+        </div>
+        <div class="quiz-feedback" id="feedback3"></div>
+      </div>
+
+      <button class="quiz-submit animate-on-scroll" onclick="checkQuiz()">Check Answers</button>
+
+      <!-- ======== Project ======== -->
+      <div class="project animate-on-scroll">
+        <h3>
+          <svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"/><path d="M12 15l-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"/></svg>
+          Mini-Project: Weather Station
+        </h3>
+        <p>Gumawa ng <strong>WeatherStation simulator</strong>: Subject = WeatherData, Observers = Display devices (phone, tablet, desktop). I-drawing ang sequence ng update gamit ang Observer pattern.</p>
+        <p><strong>Challenge:</strong> I-add ang possibility na mag-remove ng isang observer habang tumatakbo ang system.</p>
+      </div>
+
+      <!-- ======== Summary ======== -->
+      <h2 class="animate-on-scroll">
+        <svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+        Summary
+      </h2>
+      <ul class="animate-on-scroll">
+        <li>Ang <strong>Observer pattern</strong> ay nagbibigay ng one-to-many dependency: ang Subject ay nagno-notify sa maraming Observers.</li>
+        <li><strong>Loose coupling</strong> — hindi alam ng Subject ang konkretong klase ng observers nito.</li>
+        <li>Ang Subject ay may <code>registerObserver()</code>, <code>removeObserver()</code>, at <code>notifyObservers()</code>.</li>
+        <li>Ang Observer ay may <code>update()</code> method na tinatawag kapag nagbago ang state ng Subject.</li>
+      </ul>
+
+      <div class="info animate-on-scroll">
+        <strong>
+          <svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+          Questions?
+        </strong>
+        Review the material or ask me for clarification. I'm your teacher — pwede kang magtanong about anything na hindi clear!
+      </div>
+
+      <!-- ======== Recommended Resource ======== -->
+      <h2 class="animate-on-scroll">
+        <svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+        Recommended Resource
+      </h2>
+      <p><em>Palalimin ang iyong pagkaunawa sa lesson na ito:</em></p>
+      <ul class="animate-on-scroll">
+        <li><strong>Head First Design Patterns, Chapter 2</strong> — "Keeping your Objects in the Know" ang primary source ng lesson na ito. <a href="https://www.oreilly.com/library/view/head-first-design/9781492077992/" target="_blank" rel="noopener">Bisitahin</a></li>
+        <li><strong>Refactoring.Guru: Observer Pattern</strong> — Malinaw na explanation at UML diagrams. <a href="https://refactoring.guru/design-patterns/observer" target="_blank" rel="noopener">Bisitahin</a></li>
+      </ul>
+
+      <!-- Prev / Next — auto-populated by lesson-nav.js -->
+      <div class="lesson-nav"></div>
+
+    </div>
+  </main>
+</div>
+
+<!-- Scripts — order matters -->
+<script src="../assets/icons.js"></script>
+<script src="../assets/lessons-data.js"></script>
+<script src="../assets/sidebar.js"></script>
+<script src="../assets/lesson-nav.js"></script>
+<script src="../assets/animations.js"></script>
+<script>
+  function checkQuiz() {
+    var answers = { q1: 'b', q2: 'b', q3: 'c' };
+    for (var key in answers) {
+      var sel = document.querySelector('input[name="' + key + '"]:checked');
+      var fb = document.getElementById('feedback' + key.slice(1));
+      if (!sel) {
+        fb.textContent = 'Please select an answer.';
+        fb.className = 'quiz-feedback incorrect';
+        continue;
+      }
+      if (sel.value === answers[key]) {
+        fb.textContent = 'Correct! Well done.';
+        fb.className = 'quiz-feedback correct';
+      } else {
+        fb.textContent = 'Incorrect. Review the material and try again.';
+        fb.className = 'quiz-feedback incorrect';
+      }
+    }
+  }
+</script>
+<script>
+  (function() {
+    var btn = document.getElementById('themeToggle');
+    if (btn) {
+      btn.addEventListener('click', function() {
+        var html = document.documentElement;
+        var isDark = html.getAttribute('data-theme') === 'dark';
+        if (isDark) {
+          html.removeAttribute('data-theme');
+          localStorage.setItem('theme', 'light');
+        } else {
+          html.setAttribute('data-theme', 'dark');
+          localStorage.setItem('theme', 'dark');
+        }
+      });
+    }
+  })();
+</script>
+</body>
+</html>

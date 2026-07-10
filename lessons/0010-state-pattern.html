@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lesson 0010: State Pattern</title>
+  <link rel="stylesheet" href="../assets/style.css">
+  <script>if (localStorage.getItem("theme") === "dark") document.documentElement.setAttribute("data-theme", "dark");</script>
+</head>
+<body>
+<button class="theme-toggle" id="themeToggle" title="Toggle theme">
+  <svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+</button>
+<div class="lesson-layout">
+  <aside class="lesson-sidebar" id="lesson-sidebar"></aside>
+  <main class="lesson-main">
+    <div class="lesson-container">
+
+      <span class="lesson-phase-badge">Phase 5 &mdash; Iterator, Composite, State</span>
+      <div class="lesson-title-wrap">
+        <h1>State Pattern</h1>
+      </div>
+      <p class="lesson-subtitle">Nagbabago ang Ugali &mdash; The State of Things</p>
+
+      <div class="info animate-on-scroll">
+        <strong>
+          <svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>
+          Lesson Goal
+        </strong>
+        Payagan ang object na baguhin ang behavior kapag nagbago ang internal state, at maiwasan ang maraming if-else o switch.
+      </div>
+
+      <h2 class="animate-on-scroll">
+        <svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a5 5 0 0 1 5 5c0 .9-.2 1.7-.7 2.5A5 5 0 0 1 19 14a5 5 0 0 1-3.5 4.8A5 5 0 0 1 12 22a5 5 0 0 1-3.5-3.2A5 5 0 0 1 5 14a5 5 0 0 1 2.7-4.5A5 5 0 0 1 7 7a5 5 0 0 1 5-5z"/><path d="M12 2v20"/></svg>
+        Core Concepts
+      </h2>
+
+      <table class="animate-on-scroll">
+        <thead>
+          <tr><th>Component</th><th>Description</th><th>Example</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>Context</strong></td><td>Ang object na nagdi-delegate sa current state object. Nagbibigay ng reference sa current state.</td><td>GumballMachine</td></tr>
+          <tr><td><strong>State Interface</strong></td><td>Defines ang mga actions na pwedeng gawin sa bawat state.</td><td>insertQuarter(), ejectQuarter()</td></tr>
+          <tr><td><strong>Concrete States</strong></td><td>Bawat state ay isang klase na nagpapatupad ng behavior para sa state na iyon.</td><td>NoQuarterState, HasQuarterState</td></tr>
+        </tbody>
+      </table>
+
+      <div class="diagram-container animate-on-scroll">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/e/e8/State_Design_Pattern_UML_Class_Diagram.svg" alt="State Pattern UML Diagram">
+      </div>
+      <p class="diagram-caption">Fig 1. State Machine &mdash; GumballMachine transitions between states</p>
+
+      <h2 class="animate-on-scroll">
+        <svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+        Sample Code
+      </h2>
+
+      <pre class="animate-on-scroll"><code><span class="kw">interface</span> <span class="cl">State</span> {
+    <span class="kw">void</span> <span class="fn">insertQuarter</span>();
+    <span class="kw">void</span> <span class="fn">ejectQuarter</span>();
+    <span class="kw">void</span> <span class="fn">turnCrank</span>();
+    <span class="kw">void</span> <span class="fn">dispense</span>();
+}
+
+<span class="kw">class</span> <span class="cl">HasQuarterState</span> <span class="kw">implements</span> <span class="cl">State</span> {
+    <span class="cl">GumballMachine</span> machine;
+    <span class="kw">public void</span> <span class="fn">insertQuarter</span>() { System.out.println(<span class="st">"Already have quarter"</span>); }
+    <span class="kw">public void</span> <span class="fn">turnCrank</span>() {
+        System.out.println(<span class="st">"Turning..."</span>);
+        machine.<span class="fn">setState</span>(machine.<span class="fn">getSoldState</span>());
+    }
+}</code></pre>
+
+      <!-- Interactive State Machine -->
+      <div class="demo-box animate-on-scroll">
+        <h4>
+          <svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+          Interactive: Gumball Machine Simulator
+        </h4>
+        <p style="font-size:0.88rem;margin-bottom:1rem;">I-click ang mga action button para makita ang state transitions ng Gumball Machine!</p>
+
+        <div style="text-align:center;margin-bottom:1rem;">
+          <div id="gmState" style="font-family:var(--font-display);font-weight:900;font-size:1.5rem;color:var(--accent);margin-bottom:0.5rem;">NoQuarter</div>
+          <div style="display:flex;gap:0.5rem;justify-content:center;flex-wrap:wrap;">
+            <button class="demo-btn" onclick="gmAction('insert')">Insert Quarter</button>
+            <button class="demo-btn outline" onclick="gmAction('eject')">Eject Quarter</button>
+            <button class="demo-btn outline" onclick="gmAction('turn')">Turn Crank</button>
+          </div>
+        </div>
+
+        <div class="demo-result" id="gmLog" style="font-size:0.85rem;">Machine ready. Insert a quarter to start!</div>
+      </div>
+
+      <script>
+        var gmState = 'NoQuarter';
+        var gmLog = [];
+        function gmAction(action) {
+          var msg = '';
+          if (gmState === 'NoQuarter') {
+            if (action === 'insert') { gmState = 'HasQuarter'; msg = 'You inserted a quarter.'; }
+            else { msg = 'Please insert a quarter first.'; }
+          } else if (gmState === 'HasQuarter') {
+            if (action === 'turn') { gmState = 'Sold'; msg = 'Turning crank... dispensing gumball!'; setTimeout(function() { gmState = 'NoQuarter'; updateGM(); }, 1000); }
+            else if (action === 'eject') { gmState = 'NoQuarter'; msg = 'Quarter returned.'; }
+            else { msg = 'You already have a quarter. Turn crank or eject.'; }
+          } else if (gmState === 'Sold') {
+            msg = 'Please wait, dispensing gumball...';
+          }
+          gmLog.push(msg);
+          updateGM();
+        }
+        function updateGM() {
+          document.getElementById('gmState').textContent = gmState;
+          var colors = { NoQuarter: 'var(--muted)', HasQuarter: 'var(--accent)', Sold: 'var(--warning)' };
+          document.getElementById('gmState').style.color = colors[gmState] || 'var(--accent)';
+          document.getElementById('gmLog').innerHTML = '<strong>Log:</strong><br>' + gmLog.slice(-5).join('<br>');
+        }
+      </script>
+
+      <!-- Quiz -->
+      <h2 class="animate-on-scroll">
+        <svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+        Quick Quiz
+      </h2>
+
+      <div class="quiz-item animate-on-scroll">
+        <div class="quiz-question">1. Sa State pattern, ang Context class ay:</div>
+        <div class="quiz-options">
+          <label class="quiz-option"><input type="radio" name="q1" value="a"> Nag-iimbak ng lahat ng states</label>
+          <label class="quiz-option"><input type="radio" name="q1" value="b"> Nagdi-delegate sa current state object</label>
+          <label class="quiz-option"><input type="radio" name="q1" value="c"> Nagde-define ng lahat ng behavior</label>
+        </div>
+        <div class="quiz-feedback" id="feedback1"></div>
+      </div>
+
+      <div class="quiz-item animate-on-scroll">
+        <div class="quiz-question">2. Ang State pattern ay nag-iwas sa:</div>
+        <div class="quiz-options">
+          <label class="quiz-option"><input type="radio" name="q2" value="a"> Maraming if-else o switch statements</label>
+          <label class="quiz-option"><input type="radio" name="q2" value="b"> Inheritance</label>
+          <label class="quiz-option"><input type="radio" name="q2" value="c"> Polymorphism</label>
+        </div>
+        <div class="quiz-feedback" id="feedback2"></div>
+      </div>
+
+      <div class="quiz-item animate-on-scroll">
+        <div class="quiz-question">3. Ang state transitions ay:</div>
+        <div class="quiz-options">
+          <label class="quiz-option"><input type="radio" name="q3" value="a"> Naka-hardcode sa Context</label>
+          <label class="quiz-option"><input type="radio" name="q3" value="b"> Ginagawa ng state objects mismo</label>
+          <label class="quiz-option"><input type="radio" name="q3" value="c"> Hindi possible sa State pattern</label>
+        </div>
+        <div class="quiz-feedback" id="feedback3"></div>
+      </div>
+
+      <button class="quiz-submit animate-on-scroll" onclick="checkQuiz()">Check Answers</button>
+
+      <div class="project animate-on-scroll">
+        <h3>
+          <svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"/><path d="M12 15l-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"/></svg>
+          Mini-Project: Order State Machine
+        </h3>
+        <p>I-model ang states ng isang online order: Placed, Paid, Shipped, Delivered. Gumamit ng State pattern para sa actions sa bawat state.</p>
+      </div>
+
+      <h2 class="animate-on-scroll">
+        <svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+        Summary
+      </h2>
+      <ul class="animate-on-scroll">
+        <li>Ang <strong>State pattern</strong> ay nagbibigay-daan sa object na baguhin ang behavior depende sa internal state.</li>
+        <li>Bawat state ay isang <strong>klase</strong> na nag-iimplement ng iisang interface.</li>
+        <li>Ang <strong>Context</strong> ay nagdi-delegate sa current state object.</li>
+        <li>Nag-iwas sa maraming if-else o switch — mas malinis at maintainable.</li>
+      </ul>
+
+      <div class="info animate-on-scroll">
+        <strong>
+          <svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+          Questions?
+        </strong>
+        Review the material or ask me for clarification!
+      </div>
+
+      <h2 class="animate-on-scroll">
+        <svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+        Recommended Resource
+      </h2>
+      <ul class="animate-on-scroll">
+        <li><strong>Head First Design Patterns, Chapter 10</strong> — "The State of Things" <a href="https://www.oreilly.com/library/view/head-first-design/9781492077992/" target="_blank" rel="noopener">Bisitahin</a></li>
+        <li><strong>Refactoring.Guru: State</strong> — UML diagrams at examples. <a href="https://refactoring.guru/design-patterns/state" target="_blank" rel="noopener">Bisitahin</a></li>
+      </ul>
+
+      <div class="lesson-nav"></div>
+    </div>
+  </main>
+</div>
+
+<script src="../assets/icons.js"></script>
+<script src="../assets/lessons-data.js"></script>
+<script src="../assets/sidebar.js"></script>
+<script src="../assets/lesson-nav.js"></script>
+<script src="../assets/animations.js"></script>
+<script>
+  function checkQuiz() {
+    var answers = { q1: 'b', q2: 'a', q3: 'b' };
+    for (var key in answers) {
+      var sel = document.querySelector('input[name="' + key + '"]:checked');
+      var fb = document.getElementById('feedback' + key.slice(1));
+      if (!sel) { fb.textContent = 'Please select an answer.'; fb.className = 'quiz-feedback incorrect'; continue; }
+      if (sel.value === answers[key]) { fb.textContent = 'Correct! Well done.'; fb.className = 'quiz-feedback correct'; }
+      else { fb.textContent = 'Incorrect. Review the material and try again.'; fb.className = 'quiz-feedback incorrect'; }
+    }
+  }
+</script>
+<script>
+  (function() {
+    var btn = document.getElementById('themeToggle');
+    if (btn) {
+      btn.addEventListener('click', function() {
+        var html = document.documentElement;
+        var isDark = html.getAttribute('data-theme') === 'dark';
+        if (isDark) { html.removeAttribute('data-theme'); localStorage.setItem('theme', 'light'); }
+        else { html.setAttribute('data-theme', 'dark'); localStorage.setItem('theme', 'dark'); }
+      });
+    }
+  })();
+</script>
+</body>
+</html>

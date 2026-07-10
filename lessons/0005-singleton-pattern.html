@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lesson 0005: Singleton Pattern</title>
+  <link rel="stylesheet" href="../assets/style.css">
+  <script>if (localStorage.getItem("theme") === "dark") document.documentElement.setAttribute("data-theme", "dark");</script>
+</head>
+<body>
+<button class="theme-toggle" id="themeToggle" title="Toggle theme">
+  <svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+</button>
+<div class="lesson-layout">
+  <aside class="lesson-sidebar" id="lesson-sidebar"></aside>
+  <main class="lesson-main">
+    <div class="lesson-container">
+
+      <span class="lesson-phase-badge">Phase 3 &mdash; Singleton at Command</span>
+      <div class="lesson-title-wrap">
+        <h1>Singleton Pattern</h1>
+      </div>
+      <p class="lesson-subtitle">One and Only One &mdash; One of a Kind Objects</p>
+
+      <div class="info animate-on-scroll">
+        <strong>
+          <svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>
+          Lesson Goal
+        </strong>
+        Tiyaking iisa lang ang instance ng isang klase sa buong application, at matutunan ang iba't ibang implementation variants.
+      </div>
+
+      <h2 class="animate-on-scroll">
+        <svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a5 5 0 0 1 5 5c0 .9-.2 1.7-.7 2.5A5 5 0 0 1 19 14a5 5 0 0 1-3.5 4.8A5 5 0 0 1 12 22a5 5 0 0 1-3.5-3.2A5 5 0 0 1 5 14a5 5 0 0 1 2.7-4.5A5 5 0 0 1 7 7a5 5 0 0 1 5-5z"/><path d="M12 2v20"/></svg>
+        Core Concepts
+      </h2>
+
+      <table class="animate-on-scroll">
+        <thead>
+          <tr><th>Implementation</th><th>Description</th><th>Pros/Cons</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>Eager</strong></td><td>Instance agad kapag nag-load ang class</td><td>Simple, thread-safe. Pero hindi lazy.</td></tr>
+          <tr><td><strong>Lazy</strong></td><td>Instance lang kapag kailangan</td><td>Efficient. Pero hindi thread-safe.</td></tr>
+          <tr><td><strong>Double-Checked Locking</strong></td><td>Lazy + synchronized block + volatile</td><td>Lazy at thread-safe. Pero complex.</td></tr>
+        </tbody>
+      </table>
+
+      <div class="diagram-container animate-on-scroll">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/f/fb/Singleton_UML_class_diagram.svg" alt="Singleton Pattern UML Diagram">
+      </div>
+      <p class="diagram-caption">Fig 1. Singleton Pattern &mdash; private constructor, static getInstance(), thread-safe</p>
+
+      <h2 class="animate-on-scroll">
+        <svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+        Sample Code (Thread-Safe)
+      </h2>
+
+      <pre class="animate-on-scroll"><code><span class="kw">public class</span> <span class="cl">Singleton</span> {
+    <span class="kw">private static volatile</span> <span class="cl">Singleton</span> uniqueInstance;
+    <span class="kw">private</span> <span class="fn">Singleton</span>() {} <span class="cm">// private constructor!</span>
+
+    <span class="kw">public static</span> <span class="cl">Singleton</span> <span class="fn">getInstance</span>() {
+        <span class="kw">if</span> (uniqueInstance == <span class="kw">null</span>) {
+            <span class="kw">synchronized</span> (<span class="cl">Singleton</span>.<span class="kw">class</span>) {
+                <span class="kw">if</span> (uniqueInstance == <span class="kw">null</span>) {
+                    uniqueInstance = <span class="kw">new</span> <span class="cl">Singleton</span>();
+                }
+            }
+        }
+        <span class="kw">return</span> uniqueInstance;
+    }
+}</code></pre>
+
+      <div class="warning animate-on-scroll">
+        <strong>
+          <svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+          Warning
+        </strong>
+        Ang Singleton pattern ay madalas <strong>misused</strong>. Gamitin lang kapag talagang kailangan ng iisang instance — hal. database connection pool, configuration manager. Huwag gawing Singleton ang lahat!
+      </div>
+
+      <!-- Interactive Demo -->
+      <div class="demo-box animate-on-scroll">
+        <h4>
+          <svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+          Interactive: Singleton Hashcode Proof
+        </h4>
+        <p style="font-size:0.88rem;margin-bottom:1rem;">I-click ang button para tawagin ang getInstance() — pareho ang hashcode dahil iisa lang ang instance!</p>
+        <button class="demo-btn" onclick="singletonDemo()">getInstance()</button>
+        <div class="demo-result" id="singletonResult">I-click para tawagin ang getInstance()...</div>
+      </div>
+
+      <script>
+        var singletonHash = Math.floor(Math.random() * 1000000).toString(16).toUpperCase();
+        var callCount = 0;
+        function singletonDemo() {
+          callCount++;
+          var result = document.getElementById('singletonResult');
+          result.innerHTML = '<div>Call #' + callCount + ': Singleton@<strong>' + singletonHash + '</strong></div>';
+          result.style.background = 'var(--accent-light)';
+          setTimeout(function() { result.style.background = 'var(--bg)'; }, 500);
+          if (callCount >= 2) {
+            result.innerHTML += '<div style="color:var(--success);font-weight:600;margin-top:0.5rem;">Same hashcode! Iisa lang ang instance.</div>';
+          }
+        }
+      </script>
+
+      <!-- Quiz -->
+      <h2 class="animate-on-scroll">
+        <svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+        Quick Quiz
+      </h2>
+
+      <div class="quiz-item animate-on-scroll">
+        <div class="quiz-question">1. Sa Singleton, ang constructor ay:</div>
+        <div class="quiz-options">
+          <label class="quiz-option"><input type="radio" name="q1" value="a"> public</label>
+          <label class="quiz-option"><input type="radio" name="q1" value="b"> private</label>
+          <label class="quiz-option"><input type="radio" name="q1" value="c"> protected</label>
+        </div>
+        <div class="quiz-feedback" id="feedback1"></div>
+      </div>
+
+      <div class="quiz-item animate-on-scroll">
+        <div class="quiz-question">2. Sa double-checked locking, ang uniqueInstance field ay:</div>
+        <div class="quiz-options">
+          <label class="quiz-option"><input type="radio" name="q2" value="a"> static at final</label>
+          <label class="quiz-option"><input type="radio" name="q2" value="b"> static at volatile</label>
+          <label class="quiz-option"><input type="radio" name="q2" value="c"> transient</label>
+        </div>
+        <div class="quiz-feedback" id="feedback2"></div>
+      </div>
+
+      <div class="quiz-item animate-on-scroll">
+        <div class="quiz-question">3. Ang pinaka-simplified na Singleton implementation ay:</div>
+        <div class="quiz-options">
+          <label class="quiz-option"><input type="radio" name="q3" value="a"> Double-checked locking</label>
+          <label class="quiz-option"><input type="radio" name="q3" value="b"> Lazy initialization</label>
+          <label class="quiz-option"><input type="radio" name="q3" value="c"> Eager initialization</label>
+        </div>
+        <div class="quiz-feedback" id="feedback3"></div>
+      </div>
+
+      <button class="quiz-submit animate-on-scroll" onclick="checkQuiz()">Check Answers</button>
+
+      <div class="project animate-on-scroll">
+        <h3>
+          <svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"/><path d="M12 15l-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"/></svg>
+          Mini-Project: Singleton Proof
+        </h3>
+        <p>Patunayan na iisa lang ang instance sa pamamagitan ng pag-print ng hashcode sa dalawang tawag ng getInstance(). I-compare ang hashcodes — dapat pareho!</p>
+      </div>
+
+      <h2 class="animate-on-scroll">
+        <svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+        Summary
+      </h2>
+      <ul class="animate-on-scroll">
+        <li>Ang <strong>Singleton</strong> ay nagsisiguro na iisa lang ang instance ng isang klase.</li>
+        <li>May tatlong variants: <strong>Eager</strong>, <strong>Lazy</strong>, at <strong>Double-Checked Locking</strong>.</li>
+        <li><strong>Private constructor</strong> at <strong>static getInstance()</strong> method.</li>
+        <li>Mag-ingat sa overuse — hindi lahat kailangan ng Singleton!</li>
+      </ul>
+
+      <div class="info animate-on-scroll">
+        <strong>
+          <svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+          Questions?
+        </strong>
+        Review the material or ask me for clarification!
+      </div>
+
+      <h2 class="animate-on-scroll">
+        <svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+        Recommended Resource
+      </h2>
+      <ul class="animate-on-scroll">
+        <li><strong>Head First Design Patterns, Chapter 5</strong> — "One of a Kind Objects" <a href="https://www.oreilly.com/library/view/head-first-design/9781492077992/" target="_blank" rel="noopener">Bisitahin</a></li>
+        <li><strong>Baeldung: Singleton Pattern</strong> — All variants with code. <a href="https://www.baeldung.com/java-singleton" target="_blank" rel="noopener">Bisitahin</a></li>
+      </ul>
+
+      <div class="lesson-nav"></div>
+    </div>
+  </main>
+</div>
+
+<script src="../assets/icons.js"></script>
+<script src="../assets/lessons-data.js"></script>
+<script src="../assets/sidebar.js"></script>
+<script src="../assets/lesson-nav.js"></script>
+<script src="../assets/animations.js"></script>
+<script>
+  function checkQuiz() {
+    var answers = { q1: 'b', q2: 'b', q3: 'c' };
+    for (var key in answers) {
+      var sel = document.querySelector('input[name="' + key + '"]:checked');
+      var fb = document.getElementById('feedback' + key.slice(1));
+      if (!sel) { fb.textContent = 'Please select an answer.'; fb.className = 'quiz-feedback incorrect'; continue; }
+      if (sel.value === answers[key]) { fb.textContent = 'Correct! Well done.'; fb.className = 'quiz-feedback correct'; }
+      else { fb.textContent = 'Incorrect. Review the material and try again.'; fb.className = 'quiz-feedback incorrect'; }
+    }
+  }
+</script>
+<script>
+  (function() {
+    var btn = document.getElementById('themeToggle');
+    if (btn) {
+      btn.addEventListener('click', function() {
+        var html = document.documentElement;
+        var isDark = html.getAttribute('data-theme') === 'dark';
+        if (isDark) { html.removeAttribute('data-theme'); localStorage.setItem('theme', 'light'); }
+        else { html.setAttribute('data-theme', 'dark'); localStorage.setItem('theme', 'dark'); }
+      });
+    }
+  })();
+</script>
+</body>
+</html>

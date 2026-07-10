@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Design Patterns — Tokyo Edition</title>
+  <link rel="stylesheet" href="assets/style.css">
+  <script>if (localStorage.getItem("theme") === "dark") document.documentElement.setAttribute("data-theme", "dark");</script>
+</head>
+<body>
+<button class="theme-toggle" id="themeToggle" title="Toggle theme">
+  <svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+</button>
+
+<div class="landing">
+  <div class="landing-masthead">
+    <div class="landing-dateline">Tokyo Edition &mdash; Interactive Course &mdash; 2026</div>
+    <h1>DESIGN<br><span class="accent">PATTERNS</span></h1>
+    <p class="subtitle">Head First Design Patterns &mdash; Isang Interaktibong Kurso</p>
+  </div>
+
+  <div class="landing-red-rule"></div>
+
+  <ul class="desc">
+    <li>
+      <svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+      <strong>13 interactive lessons</strong> na hati sa 6 phases &mdash; mula Observer hanggang Compound Patterns
+    </li>
+    <li>
+      <svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>
+      <strong>Mga layunin</strong> na nakabase sa tunay na design problems &mdash; hindi lang theory
+    </li>
+    <li>
+      <svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+      <strong>Java code examples</strong> na may syntax highlighting at inline SVG diagrams
+    </li>
+    <li>
+      <svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+      <strong>Interactive demos</strong> &mdash; quizzes, simulators, at drag-and-drop exercises
+    </li>
+    <li>
+      <svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"/><path d="M12 15l-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"/></svg>
+      <strong>Final project</strong> &mdash; Smart Home System na gumagamit ng 5+ patterns
+    </li>
+  </ul>
+
+  <a href="lessons/0001-welcome-to-design-patterns.html" class="btn-start">
+    Start the Course
+  </a>
+
+  <div class="phases">
+    <div class="phases-title">Course Overview</div>
+
+    <a href="lessons/0001-welcome-to-design-patterns.html" class="phase-item">
+      <span class="phase-num">Phase 01</span>
+      <span class="phase-name">Pundasyon at Pagsisimula</span>
+      <span class="phase-count">2 lessons</span>
+    </a>
+    <a href="lessons/0003-decorator-pattern.html" class="phase-item">
+      <span class="phase-num">Phase 02</span>
+      <span class="phase-name">Decorator at Factory</span>
+      <span class="phase-count">2 lessons</span>
+    </a>
+    <a href="lessons/0005-singleton-pattern.html" class="phase-item">
+      <span class="phase-num">Phase 03</span>
+      <span class="phase-name">Singleton at Command</span>
+      <span class="phase-count">2 lessons</span>
+    </a>
+    <a href="lessons/0007-adapter-and-facade.html" class="phase-item">
+      <span class="phase-num">Phase 04</span>
+      <span class="phase-name">Adapter, Facade, Template</span>
+      <span class="phase-count">2 lessons</span>
+    </a>
+    <a href="lessons/0009-iterator-and-composite.html" class="phase-item">
+      <span class="phase-num">Phase 05</span>
+      <span class="phase-name">Iterator, Composite, State</span>
+      <span class="phase-count">2 lessons</span>
+    </a>
+    <a href="lessons/0011-proxy-pattern.html" class="phase-item">
+      <span class="phase-num">Phase 06</span>
+      <span class="phase-name">Proxy, Compound, Real-World</span>
+      <span class="phase-count">3 lessons</span>
+    </a>
+  </div>
+</div>
+
+<script>
+  (function() {
+    var btn = document.getElementById('themeToggle');
+    if (btn) {
+      btn.addEventListener('click', function() {
+        var html = document.documentElement;
+        var isDark = html.getAttribute('data-theme') === 'dark';
+        if (isDark) {
+          html.removeAttribute('data-theme');
+          localStorage.setItem('theme', 'light');
+        } else {
+          html.setAttribute('data-theme', 'dark');
+          localStorage.setItem('theme', 'dark');
+        }
+      });
+    }
+  })();
+</script>
+<script src="assets/icons.js"></script>
+</body>
+</html>

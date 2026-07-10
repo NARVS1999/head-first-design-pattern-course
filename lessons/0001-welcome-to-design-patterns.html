@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lesson 0001: Welcome to Design Patterns</title>
+  <link rel="stylesheet" href="../assets/style.css">
+  <script>if (localStorage.getItem("theme") === "dark") document.documentElement.setAttribute("data-theme", "dark");</script>
+</head>
+<body>
+<button class="theme-toggle" id="themeToggle" title="Toggle theme">
+  <svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+</button>
+<div class="lesson-layout">
+  <aside class="lesson-sidebar" id="lesson-sidebar"></aside>
+  <main class="lesson-main">
+    <div class="lesson-container">
+
+      <span class="lesson-phase-badge">Phase 1 &mdash; Pundasyon</span>
+      <div class="lesson-title-wrap">
+        <h1>Welcome to Design Patterns</h1>
+      </div>
+      <p class="lesson-subtitle">Ang unang hakbang sa pagiging malinaw na software designer</p>
+
+      <div class="info animate-on-scroll">
+        <strong>
+          <svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>
+          Lesson Goal
+        </strong>
+        Matutunan kung <em>bakit</em> kailangan ang design patterns, makilala ang OO basics, at ma-apply ang unang design principle.
+      </div>
+
+      <!-- ======== Section 1: Ano ang Design Pattern? ======== -->
+      <h2 class="animate-on-scroll">
+        <svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+        Ano ang Design Pattern?
+      </h2>
+
+      <p class="animate-on-scroll">Ang <strong>design pattern</strong> ay isang <em>tested na solusyon</em> sa paulit-ulit na problema sa software design. Hindi ito code na pwedeng i-copy-paste lang — ito ay isang <strong>template</strong> o idea na pwedeng i-adapt sa iba't ibang sitwasyon.</p>
+
+      <div class="tip animate-on-scroll">
+        <strong>
+          <svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18h6"/><path d="M10 22h4"/><path d="M15.09 14c.18-.98.65-1.74 1.41-2.5A4.65 4.65 0 0 0 18 8 6 6 0 0 0 6 8c0 1 .23 2.23 1.5 3.5A4.61 4.61 0 0 1 8.91 14"/></svg>
+          Tandaan
+        </strong>
+        Lahat ng patterns ay may <strong>trade-offs</strong> — kailangan mong pumili ng tama depende sa sitwasyon. Walang pattern na "perfect" para sa lahat ng problems.
+      </div>
+
+      <p class="animate-on-scroll">Isipin mo ito parang <strong>recipe sa pagluluto</strong>: hindi mo basta binabato ang ingredients — may tamang paraan, tamang顺序 (order), at tamang resulta. Ganoon din sa design patterns.</p>
+
+      <!-- ======== Section 2: OO Basics Refresher ======== -->
+      <h2 class="animate-on-scroll">
+        <svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a5 5 0 0 1 5 5c0 .9-.2 1.7-.7 2.5A5 5 0 0 1 19 14a5 5 0 0 1-3.5 4.8A5 5 0 0 1 12 22a5 5 0 0 1-3.5-3.2A5 5 0 0 1 5 14a5 5 0 0 1 2.7-4.5A5 5 0 0 1 7 7a5 5 0 0 1 5-5z"/><path d="M12 2v20"/></svg>
+        OO Basics Refresher
+      </h2>
+
+      <p class="animate-on-scroll">Bago tayo mag-patterns, balikan natin ang mga fundamento ng Object-Oriented Programming:</p>
+
+      <table class="animate-on-scroll">
+        <thead>
+          <tr><th>Konsepto</th><th>Depinisyon</th><th>Halimbawa</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>Inheritance</strong></td><td>Ang isang klase ay nag-i-inherit ng properties at methods ng isa pang klase</td><td>Dog <em>extends</em> Animal</td></tr>
+          <tr><td><strong>Encapsulation</strong></td><td>Pagbalot ng data at behavior sa loob ng object, pagtatago ng internals</td><td>Private fields + getters/setters</td></tr>
+          <tr><td><strong>Polymorphism</strong></td><td>Parehong interface, ibang behavior depende sa implementation</td><td>Duck at Chicken parehong may <code>quack()</code></td></tr>
+          <tr><td><strong>Abstraction</strong></td><td>Pagpapakita lang ng essential features, pagtatago ng complexity</td><td>Interface <code>QuackBehavior</code></td></tr>
+        </tbody>
+      </table>
+
+      <!-- ======== Section 3: Unang Design Principle ======== -->
+      <h2 class="animate-on-scroll">
+        <svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4"/></svg>
+        Unang Design Principle
+      </h2>
+
+      <blockquote class="animate-on-scroll">
+        <p><strong>"Identify the aspects of your application that vary and separate them from what stays the same."</strong></p>
+        <p style="margin-top:0.5rem;font-style:normal;font-size:0.9rem;">Sa Taglish: Hanapin mo yung mga bahagi ng code na <strong>madalas magbago</strong>, at <strong>ihiwalay mo sila</strong> para hindi maapektuhan ang stable na code.</p>
+      </blockquote>
+
+      <p class="animate-on-scroll">Ito ang pinaka-fundamental na principle sa buong course. Kapag na-master mo ito, magiging mas malinaw ang pag-iisip mo sa pagdedesign.</p>
+
+      <!-- ======== Section 4: Live Demo ======== -->
+      <div class="demo-box animate-on-scroll">
+        <h4>
+          <svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+          Interactive: Duck Simulation
+        </h4>
+        <p style="font-size:0.88rem;margin-bottom:1rem;">I-click ang mga button para makita kung paano nag-behave ang iba't ibang ducks. Mapapansin mo na ang <strong>quack behavior</strong> at <strong>fly behavior</strong> ay nag-iiba — kaya kailangan silang i-separate!</p>
+
+        <div id="duckDemo" style="text-align:center;margin:1rem 0;">
+          <div style="font-size:2rem;margin-bottom:0.5rem;" id="duckEmoji">🦆</div>
+          <div style="font-family:var(--font-display);font-weight:700;margin-bottom:0.5rem;" id="duckType">Mallard Duck</div>
+          <div style="display:flex;gap:0.5rem;justify-content:center;flex-wrap:wrap;">
+            <button class="demo-btn" onclick="duckQuack()">Quack</button>
+            <button class="demo-btn outline" onclick="duckFly()">Fly</button>
+            <button class="demo-btn outline" onclick="changeDuck()">Change Duck</button>
+          </div>
+          <div class="demo-result" id="duckResult">I-click ang isang button para magsimula...</div>
+        </div>
+      </div>
+
+      <!-- ======== Section 5: Sample Code ======== -->
+      <h2 class="animate-on-scroll">
+        <svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+        Sample Idea: Encapsulating What Varies
+      </h2>
+
+      <pre class="animate-on-scroll"><code>// Instead of hardcoding behavior, use an interface
+<span class="kw">interface</span> <span class="cl">QuackBehavior</span> {
+    <span class="kw">void</span> <span class="fn">quack</span>();
+}
+
+<span class="kw">class</span> <span class="cl">Duck</span> {
+    <span class="cl">QuackBehavior</span> quackBehavior; <span class="cm">// varies!</span>
+
+    <span class="kw">void</span> <span class="fn">performQuack</span>() {
+        quackBehavior.<span class="fn">quack</span>(); <span class="cm">// delegates to behavior</span>
+    }
+}
+
+<span class="cm">// Different implementations</span>
+<span class="kw">class</span> <span class="cl">Squeak</span> <span class="kw">implements</span> <span class="cl">QuackBehavior</span> {
+    <span class="kw">void</span> <span class="fn">quack</span>() { System.out.println(<span class="st">"Squeak!"</span>); }
+}
+
+<span class="kw">class</span> <span class="cl">MuteQuack</span> <span class="kw">implements</span> <span class="cl">QuackBehavior</span> {
+    <span class="kw">void</span> <span class="fn">quack</span>() { System.out.println(<span class="st">"<< silence >>"</span>); }
+}</code></pre>
+
+      <!-- ======== Quiz ======== -->
+      <h2 class="animate-on-scroll">
+        <svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+        Quick Quiz
+      </h2>
+
+      <div class="quiz-item animate-on-scroll">
+        <div class="quiz-question">1. Ang design pattern ay isang _____ na tested na solusyon sa paulit-ulit na problema.</div>
+        <div class="quiz-options">
+          <label class="quiz-option"><input type="radio" name="q1" value="a"> source code</label>
+          <label class="quiz-option"><input type="radio" name="q1" value="b"> template o idea</label>
+          <label class="quiz-option"><input type="radio" name="q1" value="c"> programming language</label>
+        </div>
+        <div class="quiz-feedback" id="feedback1"></div>
+      </div>
+
+      <div class="quiz-item animate-on-scroll">
+        <div class="quiz-question">2. Ang unang design principle ay ang:</div>
+        <div class="quiz-options">
+          <label class="quiz-option"><input type="radio" name="q2" value="a"> Favor composition over inheritance</label>
+          <label class="quiz-option"><input type="radio" name="q2" value="b"> Identify what varies and separate it from what stays the same</label>
+          <label class="quiz-option"><input type="radio" name="q2" value="c"> Program to interfaces, not implementations</label>
+        </div>
+        <div class="quiz-feedback" id="feedback2"></div>
+      </div>
+
+      <div class="quiz-item animate-on-scroll">
+        <div class="quiz-question">3. Sa OOP, ang pagtreat ng iba't ibang objects bilang iisang type gamit ang parehong interface ay tinatawag na:</div>
+        <div class="quiz-options">
+          <label class="quiz-option"><input type="radio" name="q3" value="a"> Encapsulation</label>
+          <label class="quiz-option"><input type="radio" name="q3" value="b"> Inheritance</label>
+          <label class="quiz-option"><input type="radio" name="q3" value="c"> Polymorphism</label>
+        </div>
+        <div class="quiz-feedback" id="feedback3"></div>
+      </div>
+
+      <button class="quiz-submit animate-on-scroll" onclick="checkQuiz()">Check Answers</button>
+
+      <!-- ======== Project ======== -->
+      <div class="project animate-on-scroll">
+        <h3>
+          <svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"/><path d="M12 15l-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"/></svg>
+          Mini-Project: Online Store Analysis
+        </h3>
+        <p>Maglista ng <strong>3 scenarios</strong> sa isang maliit na online store app kung saan may <strong>nagbabago (varying)</strong> at dapat <strong>ihiwalay</strong>.</p>
+        <p><strong>Halimbawa:</strong> Ang payment method (credit card, GCash, PayPal) ay nagbabago — kaya dapat naka-separate sa order processing logic.</p>
+        <p>Isulat ang iyong sagot sa isang notebook o text file. I-share sa akin para ma-check!</p>
+      </div>
+
+      <!-- ======== Summary ======== -->
+      <h2 class="animate-on-scroll">
+        <svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+        Summary
+      </h2>
+      <ul class="animate-on-scroll">
+        <li>Ang <strong>design pattern</strong> ay isang tested na solusyon sa paulit-ulit na design problem — hindi lang code, kundi isang <strong>idea</strong>.</li>
+        <li>Ang <strong>unang design principle</strong>: Identify what varies and separate it from what stays the same.</li>
+        <li>Ang OO basics (inheritance, encapsulation, polymorphism, abstraction) ay ang foundation ng lahat ng patterns.</li>
+        <li>Lahat ng patterns ay may <strong>trade-offs</strong> — pumili ng tama depende sa sitwasyon.</li>
+      </ul>
+
+      <div class="info animate-on-scroll">
+        <strong>
+          <svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+          Questions?
+        </strong>
+        Review the material or ask me for clarification. I'm your teacher — pwede kang magtanong about anything na hindi clear!
+      </div>
+
+      <!-- ======== Recommended Resource ======== -->
+      <h2 class="animate-on-scroll">
+        <svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+        Recommended Resource
+      </h2>
+      <p><em>Palalimin ang iyong pagkaunawa sa lesson na ito:</em></p>
+      <ul class="animate-on-scroll">
+        <li><strong>Head First Design Patterns, Chapter 1</strong> — Ang buong chapter na "Welcome to Design Patterns" ang primary source ng lesson na ito. <a href="https://www.oreilly.com/library/view/head-first-design/9781492077992/" target="_blank" rel="noopener">Bisitahin</a></li>
+        <li><strong>Refactoring.Guru: What is a Design Pattern?</strong> — Malinaw na alternative explanation. <a href="https://refactoring.guru/design-patterns/what-is-pattern" target="_blank" rel="noopener">Bisitahin</a></li>
+      </ul>
+
+      <!-- Prev / Next — auto-populated by lesson-nav.js -->
+      <div class="lesson-nav"></div>
+
+    </div>
+  </main>
+</div>
+
+<!-- Scripts — order matters -->
+<script src="../assets/icons.js"></script>
+<script src="../assets/lessons-data.js"></script>
+<script src="../assets/sidebar.js"></script>
+<script src="../assets/lesson-nav.js"></script>
+<script src="../assets/animations.js"></script>
+<script>
+  // Duck demo
+  var ducks = [
+    { name: 'Mallard Duck', quack: 'Quack! Quack!', fly: 'I\'m flying with wings!' },
+    { name: 'Rubber Duck', quack: 'Squeak! Squeak!', fly: 'I can\'t fly... I\'m rubber!' },
+    { name: 'Decoy Duck', quack: '<< silence >>', fly: 'I can\'t fly... I\'m a decoy!' }
+  ];
+  var duckIdx = 0;
+  function changeDuck() {
+    duckIdx = (duckIdx + 1) % ducks.length;
+    var d = ducks[duckIdx];
+    document.getElementById('duckType').textContent = d.name;
+    document.getElementById('duckResult').textContent = 'Changed to ' + d.name + '!';
+    document.getElementById('duckResult').style.background = 'var(--accent-light)';
+  }
+  function duckQuack() {
+    document.getElementById('duckResult').textContent = ducks[duckIdx].quack;
+    document.getElementById('duckResult').style.background = 'var(--code-bg)';
+  }
+  function duckFly() {
+    document.getElementById('duckResult').textContent = ducks[duckIdx].fly;
+    document.getElementById('duckResult').style.background = 'var(--code-bg)';
+  }
+
+  function checkQuiz() {
+    var answers = { q1: 'b', q2: 'b', q3: 'c' };
+    for (var key in answers) {
+      var sel = document.querySelector('input[name="' + key + '"]:checked');
+      var fb = document.getElementById('feedback' + key.slice(1));
+      if (!sel) {
+        fb.textContent = 'Please select an answer.';
+        fb.className = 'quiz-feedback incorrect';
+        continue;
+      }
+      if (sel.value === answers[key]) {
+        fb.textContent = 'Correct! Well done.';
+        fb.className = 'quiz-feedback correct';
+      } else {
+        fb.textContent = 'Incorrect. Review the material and try again.';
+        fb.className = 'quiz-feedback incorrect';
+      }
+    }
+  }
+</script>
+<script>
+  (function() {
+    var btn = document.getElementById('themeToggle');
+    if (btn) {
+      btn.addEventListener('click', function() {
+        var html = document.documentElement;
+        var isDark = html.getAttribute('data-theme') === 'dark';
+        if (isDark) {
+          html.removeAttribute('data-theme');
+          localStorage.setItem('theme', 'light');
+        } else {
+          html.setAttribute('data-theme', 'dark');
+          localStorage.setItem('theme', 'dark');
+        }
+      });
+    }
+  })();
+</script>
+</body>
+</html>

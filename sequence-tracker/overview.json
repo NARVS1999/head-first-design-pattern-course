@@ -1,19 +1,141 @@
 {
-  "title": "Course Title",
-  "description": "Brief description of the course",
-  "totalLessons": 0,
+  "title": "Head First Design Patterns — Tokyo Edition",
+  "description": "Isang interaktibong kurso sa design patterns gamit ang Taglish at Japanese newspaper theme",
+  "totalLessons": 13,
   "completed": 0,
-  "inProgress": 0,
-  "pending": 0,
-  "lastUpdated": "",
+  "inProgress": 1,
+  "pending": 12,
+  "lastUpdated": "2026-07-10",
   "lessons": [
     {
       "id": "0001",
-      "title": "Lesson Title",
-      "file": "0001-lesson-title.html",
-      "status": "pending",
-      "topics": [],
+      "title": "Welcome to Design Patterns",
+      "file": "0001-welcome-to-design-patterns.html",
+      "phase": 1,
+      "phaseName": "Pundasyon at Pagsisimula",
+      "status": "in-progress",
+      "topics": ["Duck simulation", "Encapsulation vs inheritance", "OO basics"],
       "prerequisites": []
+    },
+    {
+      "id": "0002",
+      "title": "Observer Pattern",
+      "file": "0002-observer-pattern.html",
+      "phase": 1,
+      "phaseName": "Pundasyon at Pagsisimula",
+      "status": "pending",
+      "topics": ["Weather station", "Subject/Observer interface", "Loose coupling"],
+      "prerequisites": ["0001"]
+    },
+    {
+      "id": "0003",
+      "title": "Decorator Pattern",
+      "file": "0003-decorator-pattern.html",
+      "phase": 2,
+      "phaseName": "Decorator at Factory",
+      "status": "pending",
+      "topics": ["Starbuzz coffee", "Wrapping objects", "Open/closed principle"],
+      "prerequisites": ["0001"]
+    },
+    {
+      "id": "0004",
+      "title": "Factory Patterns",
+      "file": "0004-factory-patterns.html",
+      "phase": 2,
+      "phaseName": "Decorator at Factory",
+      "status": "pending",
+      "topics": ["Pizza store", "Simple Factory", "Factory Method", "Abstract Factory"],
+      "prerequisites": ["0001"]
+    },
+    {
+      "id": "0005",
+      "title": "Singleton Pattern",
+      "file": "0005-singleton-pattern.html",
+      "phase": 3,
+      "phaseName": "Singleton at Command",
+      "status": "pending",
+      "topics": ["Chocolate factory", "Private constructor", "Static instance"],
+      "prerequisites": ["0001"]
+    },
+    {
+      "id": "0006",
+      "title": "Command Pattern",
+      "file": "0006-command-pattern.html",
+      "phase": 3,
+      "phaseName": "Singleton at Command",
+      "status": "pending",
+      "topics": ["Remote control", "Undo operations", "Macro commands"],
+      "prerequisites": ["0001"]
+    },
+    {
+      "id": "0007",
+      "title": "Adapter & Facade",
+      "file": "0007-adapter-and-facade.html",
+      "phase": 4,
+      "phaseName": "Adapter, Facade, Template",
+      "status": "pending",
+      "topics": ["Home theater", "Interface conversion", "Simplifying subsystems"],
+      "prerequisites": ["0001"]
+    },
+    {
+      "id": "0008",
+      "title": "Template Method",
+      "file": "0008-template-method.html",
+      "phase": 4,
+      "phaseName": "Adapter, Facade, Template",
+      "status": "pending",
+      "topics": ["Data exporter", "Hook methods", "Hollywood principle"],
+      "prerequisites": ["0001"]
+    },
+    {
+      "id": "0009",
+      "title": "Iterator & Composite",
+      "file": "0009-iterator-and-composite.html",
+      "phase": 5,
+      "phaseName": "Iterator, Composite, State",
+      "status": "pending",
+      "topics": ["Menu iterator", "Tree traversal", "Uniform interface"],
+      "prerequisites": ["0001"]
+    },
+    {
+      "id": "0010",
+      "title": "State Pattern",
+      "file": "0010-state-pattern.html",
+      "phase": 5,
+      "phaseName": "Iterator, Composite, State",
+      "status": "pending",
+      "topics": ["Gumball machine", "State transitions", "Eliminating conditionals"],
+      "prerequisites": ["0001"]
+    },
+    {
+      "id": "0011",
+      "title": "Proxy Pattern",
+      "file": "0011-proxy-pattern.html",
+      "phase": 6,
+      "phaseName": "Proxy, Compound, Real-World",
+      "status": "pending",
+      "topics": ["Virtual proxy", "Remote proxy", "Protection proxy"],
+      "prerequisites": ["0001"]
+    },
+    {
+      "id": "0012",
+      "title": "Compound Patterns",
+      "file": "0012-compound-patterns.html",
+      "phase": 6,
+      "phaseName": "Proxy, Compound, Real-World",
+      "status": "pending",
+      "topics": ["MVC", "Model/View/Controller", "Combining patterns"],
+      "prerequisites": ["0001"]
+    },
+    {
+      "id": "0013",
+      "title": "Real-World Patterns",
+      "file": "0013-real-world-patterns.html",
+      "phase": 6,
+      "phaseName": "Proxy, Compound, Real-World",
+      "status": "pending",
+      "topics": ["Pattern matcher", "9 principles recap", "Final project"],
+      "prerequisites": ["0001", "0002", "0003", "0004", "0005", "0006", "0007", "0008", "0009", "0010", "0011", "0012"]
     }
   ]
 }

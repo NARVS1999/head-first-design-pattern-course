@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lesson 0004: Factory Patterns</title>
+  <link rel="stylesheet" href="../assets/style.css">
+  <script>if (localStorage.getItem("theme") === "dark") document.documentElement.setAttribute("data-theme", "dark");</script>
+</head>
+<body>
+<button class="theme-toggle" id="themeToggle" title="Toggle theme">
+  <svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+</button>
+<div class="lesson-layout">
+  <aside class="lesson-sidebar" id="lesson-sidebar"></aside>
+  <main class="lesson-main">
+    <div class="lesson-container">
+
+      <span class="lesson-phase-badge">Phase 2 &mdash; Decorator at Factory</span>
+      <div class="lesson-title-wrap">
+        <h1>Factory Patterns</h1>
+      </div>
+      <p class="lesson-subtitle">Simple, Method, at Abstract &mdash; Baking with OO Goodness</p>
+
+      <div class="info animate-on-scroll">
+        <strong>
+          <svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>
+          Lesson Goal
+        </strong>
+        Maunawaan ang tatlong factory (Simple, Method, Abstract), at makita kung paano ini-encapsulate ang object creation.
+      </div>
+
+      <h2 class="animate-on-scroll">
+        <svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a5 5 0 0 1 5 5c0 .9-.2 1.7-.7 2.5A5 5 0 0 1 19 14a5 5 0 0 1-3.5 4.8A5 5 0 0 1 12 22a5 5 0 0 1-3.5-3.2A5 5 0 0 1 5 14a5 5 0 0 1 2.7-4.5A5 5 0 0 1 7 7a5 5 0 0 1 5-5z"/><path d="M12 2v20"/></svg>
+        Core Concepts
+      </h2>
+
+      <table class="animate-on-scroll">
+        <thead>
+          <tr><th>Factory Type</th><th>Description</th><th>Kailan Gamitin</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>Simple Factory</strong></td><td>Isang klase na may paraan para gumawa ng objects. Hindi technically isang pattern, kundi isang programming technique.</td><td>Kapag may iisang klase na nagpoproduce ng iba't ibang objects depende sa parameter.</td></tr>
+          <tr><td><strong>Factory Method</strong></td><td>Subclasses ang nagde-decide kung anong object ang gagawin. Ang base class ay nagde-define ng algorithm.</td><td>Kapag hindi mo alam kung anong exact na klase ang gagamitin hanggang sa runtime.</td></tr>
+          <tr><td><strong>Abstract Factory</strong></td><td>Interface para sa creating families of related objects nang hindi tinutukoy ang mga concrete classes.</td><td>Kapag may multiple na may kaugnay na mga products na kailangan i-create together.</td></tr>
+        </tbody>
+      </table>
+
+      <h2 class="animate-on-scroll">
+        <svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4"/></svg>
+        Design Principle
+      </h2>
+
+      <blockquote class="animate-on-scroll">
+        <p><strong>"Depend upon abstractions. Do not depend upon concrete classes."</strong></p>
+        <p style="margin-top:0.5rem;font-style:normal;font-size:0.9rem;">Sa Taglish: Ang code mo dapat nakadepende sa <strong>interfaces</strong> o abstract classes, hindi sa mga konkretong implementation. Ito ang Dependency Inversion Principle.</p>
+      </blockquote>
+
+      <div class="diagram-container animate-on-scroll">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/8/8e/Factory_Method_UML_class_diagram.svg" alt="Factory Method UML Diagram">
+      </div>
+      <p class="diagram-caption">Fig 1. Factory Method Pattern &mdash; PizzaStore delegates pizza creation to subclasses</p>
+
+      <h2 class="animate-on-scroll">
+        <svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+        Sample Code (Factory Method)
+      </h2>
+
+      <pre class="animate-on-scroll"><code><span class="kw">abstract class</span> <span class="cl">PizzaStore</span> {
+    <span class="kw">abstract</span> <span class="cl">Pizza</span> <span class="fn">createPizza</span>(String type);
+
+    <span class="kw">public</span> <span class="cl">Pizza</span> <span class="fn">orderPizza</span>(String type) {
+        <span class="cl">Pizza</span> pizza = <span class="fn">createPizza</span>(type); <span class="cm">// factory method!</span>
+        pizza.<span class="fn">prepare</span>();
+        pizza.<span class="fn">bake</span>();
+        pizza.<span class="fn">cut</span>();
+        pizza.<span class="fn">box</span>();
+        <span class="kw">return</span> pizza;
+    }
+}
+
+<span class="kw">class</span> <span class="cl">NYPizzaStore</span> <span class="kw">extends</span> <span class="cl">PizzaStore</span> {
+    <span class="cl">Pizza</span> <span class="fn">createPizza</span>(String type) {
+        <span class="kw">if</span> (type.equals(<span class="st">"cheese"</span>)) <span class="kw">return new</span> <span class="cl">NYStyleCheesePizza</span>();
+        <span class="cm">// ...</span>
+    }
+}</code></pre>
+
+      <!-- Interactive Factory Demo -->
+      <div class="demo-box animate-on-scroll">
+        <h4>
+          <svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+          Interactive: Pizza Store Factory
+        </h4>
+        <p style="font-size:0.88rem;margin-bottom:1rem;">Pumili ng store type at pizza type — makita kung aling concrete class ang ginawa ng factory!</p>
+
+        <div style="display:flex;gap:1rem;flex-wrap:wrap;margin-bottom:1rem;">
+          <div>
+            <label style="font-family:var(--font-display);font-size:0.8rem;font-weight:600;display:block;margin-bottom:0.25rem;">Store</label>
+            <select id="storeType" onchange="factoryDemo()" style="padding:0.4rem;border:1px solid var(--border);border-radius:var(--radius);font-family:var(--font-body);background:var(--bg);color:var(--text);">
+              <option value="ny">NY Pizza Store</option>
+              <option value="chicago">Chicago Pizza Store</option>
+            </select>
+          </div>
+          <div>
+            <label style="font-family:var(--font-display);font-size:0.8rem;font-weight:600;display:block;margin-bottom:0.25rem;">Pizza Type</label>
+            <select id="pizzaType" onchange="factoryDemo()" style="padding:0.4rem;border:1px solid var(--border);border-radius:var(--radius);font-family:var(--font-body);background:var(--bg);color:var(--text);">
+              <option value="cheese">Cheese</option>
+              <option value="pepperoni">Pepperoni</option>
+              <option value="veggie">Veggie</option>
+            </select>
+          </div>
+        </div>
+
+        <button class="demo-btn" onclick="factoryDemo()">Order Pizza</button>
+
+        <div class="demo-result" id="factoryResult" style="margin-top:1rem;">
+          I-click "Order Pizza" para magsimula...
+        </div>
+      </div>
+
+      <script>
+        var pizzaClasses = {
+          ny: { cheese: 'NYStyleCheesePizza', pepperoni: 'NYStylePepperoniPizza', veggie: 'NYStyleVeggiePizza' },
+          chicago: { cheese: 'ChicagoStyleCheesePizza', pepperoni: 'ChicagoStylePepperoniPizza', veggie: 'ChicagoStyleVeggiePizza' }
+        };
+        function factoryDemo() {
+          var store = document.getElementById('storeType').value;
+          var type = document.getElementById('pizzaType').value;
+          var cls = pizzaClasses[store][type];
+          var storeName = store === 'ny' ? 'NYPizzaStore' : 'ChicagoPizzaStore';
+          document.getElementById('factoryResult').innerHTML =
+            '<div style="color:var(--accent);font-weight:600;">Factory Method called:</div>' +
+            '<div>' + storeName + '.createPizza("' + type + '")</div>' +
+            '<div style="margin-top:0.5rem;">Created: <strong>' + cls + '</strong></div>' +
+            '<div style="font-size:0.8rem;color:var(--muted);margin-top:0.25rem;">The subclass decided which concrete class to instantiate!</div>';
+        }
+      </script>
+
+      <!-- Quiz -->
+      <h2 class="animate-on-scroll">
+        <svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+        Quick Quiz
+      </h2>
+
+      <div class="quiz-item animate-on-scroll">
+        <div class="quiz-question">1. Sa Factory Method, ang mga subclass ang:</div>
+        <div class="quiz-options">
+          <label class="quiz-option"><input type="radio" name="q1" value="a"> Nagde-decide kung anong object ang gagawin</label>
+          <label class="quiz-option"><input type="radio" name="q1" value="b"> Nag-iimbak ng mga objects</label>
+          <label class="quiz-option"><input type="radio" name="q1" value="c"> Nagde-destroy ng objects</label>
+        </div>
+        <div class="quiz-feedback" id="feedback1"></div>
+      </div>
+
+      <div class="quiz-item animate-on-scroll">
+        <div class="quiz-question">2. Ang Dependency Inversion Principle ay nangangahulugan na:</div>
+        <div class="quiz-options">
+          <label class="quiz-option"><input type="radio" name="q2" value="a"> Ang high-level ay depend sa low-level modules</label>
+          <label class="quiz-option"><input type="radio" name="q2" value="b"> Parehong nakadepende sa abstractions</label>
+          <label class="quiz-option"><input type="radio" name="q2" value="c"> Ang low-level ay depend sa high-level modules</label>
+        </div>
+        <div class="quiz-feedback" id="feedback2"></div>
+      </div>
+
+      <div class="quiz-item animate-on-scroll">
+        <div class="quiz-question">3. Ang Simple Factory ay hindi technically isang:</div>
+        <div class="quiz-options">
+          <label class="quiz-option"><input type="radio" name="q3" value="a"> class</label>
+          <label class="quiz-option"><input type="radio" name="q3" value="b"> design pattern</label>
+          <label class="quiz-option"><input type="radio" name="q3" value="c"> method</label>
+        </div>
+        <div class="quiz-feedback" id="feedback3"></div>
+      </div>
+
+      <button class="quiz-submit animate-on-scroll" onclick="checkQuiz()">Check Answers</button>
+
+      <div class="project animate-on-scroll">
+        <h3>
+          <svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"/><path d="M12 15l-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"/></svg>
+          Mini-Project: Notification Factory
+        </h3>
+        <p>Gumawa ng app na pwedeng mag-produce ng "EmailNotification" o "SMSNotification" gamit ang Factory Method. Ang base class ay <code>NotificationFactory</code> at ang subclasses ay <code>EmailFactory</code> at <code>SMSFactory</code>.</p>
+      </div>
+
+      <h2 class="animate-on-scroll">
+        <svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+        Summary
+      </h2>
+      <ul class="animate-on-scroll">
+        <li><strong>Simple Factory</strong>: Isang klase na nagpoproduce ng objects — technique, hindi pattern.</li>
+        <li><strong>Factory Method</strong>: Subclasses ang nagde-decide kung anong object ang gagawin.</li>
+        <li><strong>Abstract Factory</strong>: Interface para sa creating families of related objects.</li>
+        <li><strong>Dependency Inversion</strong>: Depend sa abstractions, hindi sa concrete classes.</li>
+      </ul>
+
+      <div class="info animate-on-scroll">
+        <strong>
+          <svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+          Questions?
+        </strong>
+        Review the material or ask me for clarification!
+      </div>
+
+      <h2 class="animate-on-scroll">
+        <svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+        Recommended Resource
+      </h2>
+      <ul class="animate-on-scroll">
+        <li><strong>Head First Design Patterns, Chapter 4</strong> — "Baking with OO Goodness" <a href="https://www.oreilly.com/library/view/head-first-design/9781492077992/" target="_blank" rel="noopener">Bisitahin</a></li>
+        <li><strong>Refactoring.Guru: Factory</strong> — Comparison ng tatlong factory types. <a href="https://refactoring.guru/design-patterns/factory-method" target="_blank" rel="noopener">Bisitahin</a></li>
+      </ul>
+
+      <div class="lesson-nav"></div>
+    </div>
+  </main>
+</div>
+
+<script src="../assets/icons.js"></script>
+<script src="../assets/lessons-data.js"></script>
+<script src="../assets/sidebar.js"></script>
+<script src="../assets/lesson-nav.js"></script>
+<script src="../assets/animations.js"></script>
+<script>
+  function checkQuiz() {
+    var answers = { q1: 'a', q2: 'b', q3: 'b' };
+    for (var key in answers) {
+      var sel = document.querySelector('input[name="' + key + '"]:checked');
+      var fb = document.getElementById('feedback' + key.slice(1));
+      if (!sel) { fb.textContent = 'Please select an answer.'; fb.className = 'quiz-feedback incorrect'; continue; }
+      if (sel.value === answers[key]) { fb.textContent = 'Correct! Well done.'; fb.className = 'quiz-feedback correct'; }
+      else { fb.textContent = 'Incorrect. Review the material and try again.'; fb.className = 'quiz-feedback incorrect'; }
+    }
+  }
+</script>
+<script>
+  (function() {
+    var btn = document.getElementById('themeToggle');
+    if (btn) {
+      btn.addEventListener('click', function() {
+        var html = document.documentElement;
+        var isDark = html.getAttribute('data-theme') === 'dark';
+        if (isDark) { html.removeAttribute('data-theme'); localStorage.setItem('theme', 'light'); }
+        else { html.setAttribute('data-theme', 'dark'); localStorage.setItem('theme', 'dark'); }
+      });
+    }
+  })();
+</script>
+</body>
+</html>

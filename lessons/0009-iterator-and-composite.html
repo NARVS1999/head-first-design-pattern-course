@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lesson 0009: Iterator & Composite</title>
+  <link rel="stylesheet" href="../assets/style.css">
+  <script>if (localStorage.getItem("theme") === "dark") document.documentElement.setAttribute("data-theme", "dark");</script>
+</head>
+<body>
+<button class="theme-toggle" id="themeToggle" title="Toggle theme">
+  <svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+</button>
+<div class="lesson-layout">
+  <aside class="lesson-sidebar" id="lesson-sidebar"></aside>
+  <main class="lesson-main">
+    <div class="lesson-container">
+
+      <span class="lesson-phase-badge">Phase 5 &mdash; Iterator, Composite, State</span>
+      <div class="lesson-title-wrap">
+        <h1>Iterator & Composite</h1>
+      </div>
+      <p class="lesson-subtitle">Isang Traversal, Iisang Tree &mdash; Well-Managed Collections</p>
+
+      <div class="info animate-on-scroll">
+        <strong>
+          <svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>
+          Lesson Goal
+        </strong>
+        Matutunan ang <strong>Iterator</strong> (traverse collections without exposing structure) at <strong>Composite</strong> (treat individual objects and groups as one).
+      </div>
+
+      <h2 class="animate-on-scroll">
+        <svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a5 5 0 0 1 5 5c0 .9-.2 1.7-.7 2.5A5 5 0 0 1 19 14a5 5 0 0 1-3.5 4.8A5 5 0 0 1 12 22a5 5 0 0 1-3.5-3.2A5 5 0 0 1 5 14a5 5 0 0 1 2.7-4.5A5 5 0 0 1 7 7a5 5 0 0 1 5-5z"/><path d="M12 2v20"/></svg>
+        Core Concepts
+      </h2>
+
+      <table class="animate-on-scroll">
+        <thead>
+          <tr><th>Pattern</th><th>Purpose</th><th>Key Methods</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>Iterator</strong></td><td>Mag-traverse ng collection nang hindi ini-expose ang underlying structure.</td><td><code>hasNext()</code>, <code>next()</code></td></tr>
+          <tr><td><strong>Composite</strong></td><td>Treat ng individual objects at groups bilang iisang entity (tree structure).</td><td><code>add()</code>, <code>remove()</code>, <code>getChild()</code></td></tr>
+        </tbody>
+      </table>
+
+      <h2 class="animate-on-scroll">
+        <svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4"/></svg>
+        Design Principle
+      </h2>
+
+      <blockquote class="animate-on-scroll">
+        <p><strong>"A class should have only one reason to change."</strong></p>
+        <p style="margin-top:0.5rem;font-style:normal;font-size:0.9rem;">Sa Taglish: Dapat iisa lang ang dahilan para baguhin ang isang klase — isang responsibilidad lang. Ito ang <strong>Single Responsibility Principle</strong>.</p>
+      </blockquote>
+
+      <div class="diagram-container animate-on-scroll">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/6/68/Composite_UML_class_diagram.svg" alt="Composite Pattern UML Diagram">
+      </div>
+      <p class="diagram-caption">Fig 1. Composite Pattern &mdash; Menu contains MenuItems and sub-Menus recursively</p>
+
+      <h2 class="animate-on-scroll">
+        <svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+        Sample Code
+      </h2>
+
+      <pre class="animate-on-scroll"><code><span class="kw">interface</span> <span class="cl">MenuComponent</span> {
+    <span class="kw">void</span> <span class="fn">print</span>();
+}
+
+<span class="kw">class</span> <span class="cl">MenuItem</span> <span class="kw">implements</span> <span class="cl">MenuComponent</span> {
+    String name;
+    <span class="kw">double</span> price;
+    <span class="kw">void</span> <span class="fn">print</span>() { System.out.println(name + <span class="st">" $"</span> + price); }
+}
+
+<span class="kw">class</span> <span class="cl">Menu</span> <span class="kw">implements</span> <span class="cl">MenuComponent</span> {
+    List&lt;<span class="cl">MenuComponent</span>&gt; components = <span class="kw">new</span> ArrayList&lt;&gt;();
+    <span class="kw">void</span> <span class="fn">add</span>(<span class="cl">MenuComponent</span> c) { components.<span class="fn">add</span>(c); }
+    <span class="kw">void</span> <span class="fn">print</span>() {
+        <span class="kw">for</span> (<span class="cl">MenuComponent</span> c : components) c.<span class="fn">print</span>(); <span class="cm">// recursive!</span>
+    }
+}</code></pre>
+
+      <!-- Interactive Menu Traversal -->
+      <div class="demo-box animate-on-scroll">
+        <h4>
+          <svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+          Interactive: Menu Composite Traversal
+        </h4>
+        <p style="font-size:0.88rem;margin-bottom:1rem;">I-click para i-traverse ang menu tree gamit ang Iterator — makita ang lahat ng items!</p>
+
+        <div style="display:flex;gap:0.5rem;margin-bottom:1rem;">
+          <button class="demo-btn" onclick="traverseMenu()">Traverse Menu</button>
+          <button class="demo-btn outline" onclick="resetTraversal()">Reset</button>
+        </div>
+
+        <div class="demo-result" id="traversalResult" style="font-size:0.85rem;">
+          I-click "Traverse Menu" para magsimula...
+        </div>
+      </div>
+
+      <script>
+        var menuTree = [
+          { type: 'menu', name: 'Restaurant Menu', children: [
+            { type: 'menu', name: 'Breakfast', children: [
+              { type: 'item', name: 'Pancakes', price: 8.99 },
+              { type: 'item', name: 'Omelette', price: 9.99 }
+            ]},
+            { type: 'menu', name: 'Lunch', children: [
+              { type: 'item', name: 'Burger', price: 12.99 },
+              { type: 'item', name: 'Caesar Salad', price: 10.99 }
+            ]}
+          ]}
+        ];
+        var traverseLog = [];
+        function traverseNode(node, depth) {
+          var indent = '  '.repeat(depth);
+          if (node.type === 'menu') {
+            traverseLog.push(indent + '[MENU] ' + node.name);
+            node.children.forEach(function(c) { traverseNode(c, depth + 1); });
+          } else {
+            traverseLog.push(indent + '  - ' + node.name + ': $' + node.price);
+          }
+        }
+        function traverseMenu() {
+          traverseLog = [];
+          traverseNode(menuTree[0], 0);
+          document.getElementById('traversalResult').innerHTML = '<strong>Iterator traversal result:</strong><br>' + traverseLog.join('<br>');
+        }
+        function resetTraversal() {
+          document.getElementById('traversalResult').textContent = 'I-click "Traverse Menu" para magsimula...';
+        }
+      </script>
+
+      <!-- Quiz -->
+      <h2 class="animate-on-scroll">
+        <svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+        Quick Quiz
+      </h2>
+
+      <div class="quiz-item animate-on-scroll">
+        <div class="quiz-question">1. Ang Iterator pattern ay nagbibigay-daan sa pag-traverse ng collection nang:</div>
+        <div class="quiz-options">
+          <label class="quiz-option"><input type="radio" name="q1" value="a"> Ini-expose ang underlying structure</label>
+          <label class="quiz-option"><input type="radio" name="q1" value="b"> Hindi ini-expose ang underlying structure</label>
+          <label class="quiz-option"><input type="radio" name="q1" value="c"> Ginagamit ang index</label>
+        </div>
+        <div class="quiz-feedback" id="feedback1"></div>
+      </div>
+
+      <div class="quiz-item animate-on-scroll">
+        <div class="quiz-question">2. Sa Composite pattern, ang Menu at MenuItem ay parehong:</div>
+        <div class="quiz-options">
+          <label class="quiz-option"><input type="radio" name="q2" value="a"> Mga interface</label>
+          <label class="quiz-option"><input type="radio" name="q2" value="b"> Nag-i-implement ng MenuComponent</label>
+          <label class="quiz-option"><input type="radio" name="q2" value="c"> Mga abstract classes</label>
+        </div>
+        <div class="quiz-feedback" id="feedback2"></div>
+      </div>
+
+      <div class="quiz-item animate-on-scroll">
+        <div class="quiz-question">3. Ang Single Responsibility Principle ay nangangahulugan na:</div>
+        <div class="quiz-options">
+          <label class="quiz-option"><input type="radio" name="q3" value="a"> Isang klase, isang responsibilidad</label>
+          <label class="quiz-option"><input type="radio" name="q3" value="b"> Isang klase, maraming responsibilidad</label>
+          <label class="quiz-option"><input type="radio" name="q3" value="c"> Maraming klase, isang responsibilidad</label>
+        </div>
+        <div class="quiz-feedback" id="feedback3"></div>
+      </div>
+
+      <button class="quiz-submit animate-on-scroll" onclick="checkQuiz()">Check Answers</button>
+
+      <div class="project animate-on-scroll">
+        <h3>
+          <svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"/><path d="M12 15l-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"/></svg>
+          Mini-Project: Restaurant Menu System
+        </h3>
+        <p>Gumawa ng menu system (Restaurant Menu > Breakfast, Lunch > Items) gamit ang Composite at i-print lahat gamit ang Iterator.</p>
+      </div>
+
+      <h2 class="animate-on-scroll">
+        <svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+        Summary
+      </h2>
+      <ul class="animate-on-scroll">
+        <li><strong>Iterator</strong>: Traverse collections nang hindi ini-expose ang structure — <code>hasNext()</code>, <code>next()</code>.</li>
+        <li><strong>Composite</strong>: Treat individual objects at groups bilang iisang entity — recursive tree structure.</li>
+        <li><strong>Single Responsibility Principle</strong>: Isang klase, isang dahilan para baguhin.</li>
+      </ul>
+
+      <div class="info animate-on-scroll">
+        <strong>
+          <svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+          Questions?
+        </strong>
+        Review the material or ask me for clarification!
+      </div>
+
+      <h2 class="animate-on-scroll">
+        <svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+        Recommended Resource
+      </h2>
+      <ul class="animate-on-scroll">
+        <li><strong>Head First Design Patterns, Chapter 9</strong> — "Well-Managed Collections" <a href="https://www.oreilly.com/library/view/head-first-design/9781492077992/" target="_blank" rel="noopener">Bisitahin</a></li>
+        <li><strong>Refactoring.Guru: Composite</strong> — UML diagrams at examples. <a href="https://refactoring.guru/design-patterns/composite" target="_blank" rel="noopener">Bisitahin</a></li>
+      </ul>
+
+      <div class="lesson-nav"></div>
+    </div>
+  </main>
+</div>
+
+<script src="../assets/icons.js"></script>
+<script src="../assets/lessons-data.js"></script>
+<script src="../assets/sidebar.js"></script>
+<script src="../assets/lesson-nav.js"></script>
+<script src="../assets/animations.js"></script>
+<script>
+  function checkQuiz() {
+    var answers = { q1: 'b', q2: 'b', q3: 'a' };
+    for (var key in answers) {
+      var sel = document.querySelector('input[name="' + key + '"]:checked');
+      var fb = document.getElementById('feedback' + key.slice(1));
+      if (!sel) { fb.textContent = 'Please select an answer.'; fb.className = 'quiz-feedback incorrect'; continue; }
+      if (sel.value === answers[key]) { fb.textContent = 'Correct! Well done.'; fb.className = 'quiz-feedback correct'; }
+      else { fb.textContent = 'Incorrect. Review the material and try again.'; fb.className = 'quiz-feedback incorrect'; }
+    }
+  }
+</script>
+<script>
+  (function() {
+    var btn = document.getElementById('themeToggle');
+    if (btn) {
+      btn.addEventListener('click', function() {
+        var html = document.documentElement;
+        var isDark = html.getAttribute('data-theme') === 'dark';
+        if (isDark) { html.removeAttribute('data-theme'); localStorage.setItem('theme', 'light'); }
+        else { html.setAttribute('data-theme', 'dark'); localStorage.setItem('theme', 'dark'); }
+      });
+    }
+  })();
+</script>
+</body>
+</html>
